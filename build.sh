@@ -15,15 +15,15 @@ git config --global user.email "${EMAIL}"
 git config --global user.name "aa"
 [ -n "${PASSWORD}" ] && git config --global user.password "${PASSWORD}"
 
+# 下载需要编译插件的源代码
 mkdir -p  ${WORKDIR}/buildsource
 cd  ${WORKDIR}/buildsource
 git clone "$SOURCECODEURL"
 cd  ${WORKDIR}
 
-
 mips_siflower_sdk_get()
 {
-	 git clone https://github.com/gl-inet-builder/openwrt-sdk-siflower-1806.git openwrt-sdk
+	git clone https://github.com/gl-inet-builder/openwrt-sdk-siflower-1806.git openwrt-sdk
 }
 
 axt1800_sdk_get()
@@ -39,7 +39,12 @@ axt1800_sdk_get()
 	sed -i '246,258d' ${WORKDIR}/openwrt-sdk/include/package-ipkg.mk
 }
 
-
+x86_sdk_get()
+{
+	wget -q -O openwrt-sdk.tar.xz https://downloads.openwrt.org/releases/21.02.3/targets/x86/64/openwrt-sdk-21.02.3-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+	mkdir -p ${WORKDIR}/openwrt-sdk
+	tar -Jxf openwrt-sdk.tar.xz -C ${WORKDIR}/openwrt-sdk --strip=1
+}
 
 case "$BOARD" in
 	"SF1200" |\
@@ -49,10 +54,14 @@ case "$BOARD" in
 	"AXT1800" )
 		axt1800_sdk_get
 	;;
+	"X86" )
+		x86_sdk_get
+	;;
 	*)
 esac
 
 cd openwrt-sdk
+# 加入要编译插件的代码
 sed -i "1i\src-link githubaction ${WORKDIR}/buildsource" feeds.conf.default
 
 ls -l
