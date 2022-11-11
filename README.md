@@ -25,7 +25,7 @@ opkg install /tmp/*.ipk
 
 ## 可选的包
 
-<table>
+<table width="100%">
    <thead>
       <tr>
          <th>仓库</th>
@@ -41,5 +41,28 @@ opkg install /tmp/*.ipk
          <td>https://github.com/openwrt-packages/luci-app-vlmcsd</td>
          <td>luci-app-vlmcsd</td>
       </tr>
+      <tr>
+         <td>https://github.com/openwrt-packages/helloworld</td>
+         <td>luci-app-ssr-plus</td>
+      </tr>
+      <tr>
+         <td>https://github.com/openwrt-packages/luci-app-bandwidthd</td>
+         <td>luci-app-bandwidthd</td>
+      </tr>
+      <tr>
+         <td>https://github.com/openwrt-packages/luci-app-clash</td>
+         <td>luci-app-clash</td>
+      </tr>
    </tbody>
 </table>
+
+luci-samba4 新增一项
+
+![luci-samba4 配置](./samba4.jpg)
+
+```
+名称     tmp
+路径     /tmp
+可浏览   勾选
+允许用户 ftp
+```
